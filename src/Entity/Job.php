@@ -6,10 +6,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
- * @ApiResource
+ * @ApiResource(normalizationContext={"groups": {"read"}})
  * @ORM\HasLifecycleCallbacks
  */
 class Job
@@ -18,36 +19,43 @@ class Job
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $company;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read"})
      */
     private $url;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Groups({"read"})
      */
     private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="jobs")
+     * @Groups({"read"})
      */
     private $skills;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"read"})
      */
     private $createdAt;
 
