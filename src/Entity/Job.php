@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -58,6 +59,13 @@ class Job
      * @Groups({"read"})
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Gedmo\Slug(fields={"title"})
+     * @Groups({"read"})
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -161,5 +169,17 @@ class Job
     function prePersist()
     {
         $this->setCreatedAt(new \DateTime());
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
     }
 }
